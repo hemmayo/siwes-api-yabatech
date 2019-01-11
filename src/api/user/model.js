@@ -20,13 +20,6 @@ const userSchema = new Schema({
     required: true,
     minlength: 6
   },
-  matriculationNumber: {
-    type: String,
-    required: true,
-    unique: true,
-    uppercase: true,
-    trim: true
-  },
   phone: {
     type: Number,
     minlength: 8,
@@ -78,7 +71,7 @@ userSchema.pre('save', function (next) {
 userSchema.methods = {
   view (full) {
     let view = {}
-    let fields = ['id', 'name', 'picture', 'matriculationNumber']
+    let fields = ['id', 'name', 'picture']
 
     if (full) {
       fields = [...fields, 'email', 'phone', 'createdAt']
@@ -98,7 +91,7 @@ userSchema.statics = {
   roles
 }
 
-userSchema.plugin(mongooseKeywords, { paths: ['email', 'name', 'matriculationNumber', 'phone'] })
+userSchema.plugin(mongooseKeywords, { paths: ['email', 'name', 'phone'] })
 
 const model = mongoose.model('User', userSchema)
 
