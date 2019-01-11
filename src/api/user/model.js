@@ -27,6 +27,11 @@ const userSchema = new Schema({
     uppercase: true,
     trim: true
   },
+  phone: {
+    type: Number,
+    minlength: 8,
+    default: null
+  },
   name: {
     type: String,
     index: true,
@@ -76,7 +81,7 @@ userSchema.methods = {
     let fields = ['id', 'name', 'picture', 'matriculationNumber']
 
     if (full) {
-      fields = [...fields, 'email', 'createdAt']
+      fields = [...fields, 'email', 'phone', 'createdAt']
     }
 
     fields.forEach((field) => { view[field] = this[field] })
@@ -93,7 +98,7 @@ userSchema.statics = {
   roles
 }
 
-userSchema.plugin(mongooseKeywords, { paths: ['email', 'name', 'matriculationNumber'] })
+userSchema.plugin(mongooseKeywords, { paths: ['email', 'name', 'matriculationNumber', 'phone'] })
 
 const model = mongoose.model('User', userSchema)
 
