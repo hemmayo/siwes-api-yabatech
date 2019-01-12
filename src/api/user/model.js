@@ -31,6 +31,11 @@ const userSchema = new Schema({
     minlength: 8,
     default: null
   },
+  phoneVerification: {
+    type: String,
+    enum: ['none', 'verified'],
+    default: 'none'
+  },
   name: {
     type: String,
     index: true,
@@ -80,7 +85,7 @@ userSchema.methods = {
     let fields = ['id', 'name', 'picture', 'matriculationNumber']
 
     if (full) {
-      fields = [...fields, 'email', 'phone', 'createdAt']
+      fields = [...fields, 'email', 'phone', 'phoneVerification', 'createdAt']
     }
 
     fields.forEach((field) => { view[field] = this[field] })

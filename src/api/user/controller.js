@@ -1,6 +1,9 @@
 import { success, notFound } from '../../services/response/'
 import { User } from '.'
 import { sign } from '../../services/jwt'
+import { msgBirdKey } from '../../config'
+
+var messagebird = require('messagebird')(msgBirdKey)
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.find(query, select, cursor)
@@ -56,6 +59,82 @@ export const update = ({ bodymen: { body }, params, user }, res, next) =>
     })
     .then((user) => user ? Object.assign(user, body).save() : null)
     .then((user) => user ? user.view(true) : null)
+    .then(success(res))
+    .catch(next)
+
+export const updatePhone = ({ bodymen: { body }, params, user }, res, next) =>
+  User.findById(params.id === 'me' ? user.id : params.id)
+    .then(notFound(res))
+    .then((result) => {
+      if (!result) return null
+      const isAdmin = user.role === 'admin'
+      const isSelfUpdate = user.id === result.id
+      if (!isSelfUpdate && !isAdmin) {
+        res.status(401).json({
+          valid: false,
+          message: 'You can\'t change other user\'s data'
+        })
+        return null
+      }
+      return result
+    })
+    .then((user) => user ? Object.assign(user, body).save() : null)
+    .then((user) => user ? user.view(true) : null)
+    .then((user) => {
+      if (user) {
+        var params = {}
+        return new Promise((resolve, reject) => {
+          messagebird.verify.create(user.phone, params, function (err, response) {
+            if (!err) {
+              resolve({ user, verify: response })
+            }
+            resolve({ user, verify: err })
+          })
+        })
+      }
+      return user
+    })
+    .then(success(res))
+    .catch(next)
+  
+export const verifyPhone = ({ bodymen: { body }, params, user }, res, next) =>
+  User.findById(params.id === 'me' ? user.id : params.id)
+    .then(notFound(res))
+    .then((result) => {
+      if (!result) return null
+      const isAdmin = user.role === 'admin'
+      const isSelfUpdate = user.id === result.id
+      if (!isSelfUpdate && !isAdmin) {
+        res.status(401).json({
+          valid: false,
+          message: 'You can\'t change other user\'s data'
+        })
+        return null
+      }
+      return result
+    })
+    .then((user) => user ? Object.assign(user, body).save() : null)
+    .then((user) => user ? user.view(true) : null)
+    .then((user) => {
+      if (user) {
+        return new Promise((resolve, reject) => {
+          // ID returned upon creating the verify.
+          var verifyID = body.verifyID
+          var token = body.token
+
+          messagebird.verify.verify(verifyID, token, function (err, response) {
+            if (!err) {
+              if (response.status === 'verified') {
+                User.updateOne({ _id: user.id }, { $set: { phoneVerification: 'verified' } }, () => { return true })
+              }
+              resolve(response)
+            }
+            resolve(err)
+          })
+        })
+      }
+      return user
+    })
     .then(success(res))
     .catch(next)
 

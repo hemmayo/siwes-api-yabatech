@@ -30,6 +30,7 @@ const config = {
     sendgridKey: requireProcessEnv('SENDGRID_KEY'),
     masterKey: requireProcessEnv('MASTER_KEY'),
     jwtSecret: requireProcessEnv('JWT_SECRET'),
+    msgBirdKey: requireProcessEnv('MSGBIRD_KEY'),
     mongo: {
       options: {
         db: {
