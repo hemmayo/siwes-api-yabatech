@@ -41,7 +41,7 @@ const config = {
   test: { },
   development: {
     mongo: {
-      uri: 'mongodb://localhost/siwes-api-yabatech-dev',
+      uri: process.env.MONGODB_URI || 'mongodb://localhost/siwes-api-yabatech-dev',
       options: {
         debug: true
       }
