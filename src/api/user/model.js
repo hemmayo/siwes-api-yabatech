@@ -57,7 +57,7 @@ const userSchema = new Schema({
 userSchema.path('email').set(function (email) {
   if (!this.picture || this.picture.indexOf('https://gravatar.com') === 0) {
     const hash = crypto.createHash('md5').update(email).digest('hex')
-    this.picture = `https://gravatar.com/avatar/${hash}?d=identicon`
+    this.picture = `https://gravatar.com/avatar/${hash}?d=retro&s=200`
   }
 
   if (!this.name) {
