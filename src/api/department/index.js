@@ -23,7 +23,7 @@ const { title, school } = schema.tree
  * @apiError 401 admin access only.
  */
 router.post('/',
-  token({ required: true, roles: ['admin'] }),
+  // token({ required: true, roles: ['admin'] }),
   body({ title, school }),
   create)
 
