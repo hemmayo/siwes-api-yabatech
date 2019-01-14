@@ -28,7 +28,6 @@ const userSchema = new Schema({
   },
   phone: {
     type: Number,
-    minlength: 8,
     default: null
   },
   phoneVerification: {
