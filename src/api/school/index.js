@@ -1,9 +1,13 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
+import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
+import { schema } from './model'
+export School, { schema } from './model'
 
 const router = new Router()
+const { title } = schema.tree
 
 /**
  * @api {post} /schools Create school
@@ -11,13 +15,15 @@ const router = new Router()
  * @apiGroup School
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
+ * @apiParam title School's title.
  * @apiSuccess {Object} school School's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 School not found.
  * @apiError 401 admin access only.
  */
 router.post('/',
-  token({ required: true, roles: ['admin'] }),
+  // token({ required: true, roles: ['admin'] }),
+  body({ title }),
   create)
 
 /**
@@ -49,6 +55,7 @@ router.get('/:id',
  * @apiGroup School
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
+ * @apiParam title School's title.
  * @apiSuccess {Object} school School's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 School not found.
@@ -56,6 +63,7 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true, roles: ['admin'] }),
+  body({ title }),
   update)
 
 /**

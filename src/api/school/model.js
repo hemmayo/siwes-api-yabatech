@@ -1,13 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
 
-const departmentSchema = new Schema({
+const schoolSchema = new Schema({
   title: {
     type: String
-  },
-  school: {
-    type: Schema.ObjectId,
-    ref: 'School',
-    required: true
   }
 }, {
   timestamps: true,
@@ -17,13 +12,12 @@ const departmentSchema = new Schema({
   }
 })
 
-departmentSchema.methods = {
+schoolSchema.methods = {
   view (full) {
     const view = {
       // simple view
       id: this.id,
       title: this.title,
-      school: this.school,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
@@ -35,7 +29,7 @@ departmentSchema.methods = {
   }
 }
 
-const model = mongoose.model('Department', departmentSchema)
+const model = mongoose.model('School', schoolSchema)
 
 export const schema = model.schema
 export default model

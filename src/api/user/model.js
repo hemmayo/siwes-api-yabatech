@@ -57,6 +57,11 @@ const userSchema = new Schema({
     type: String,
     default: 'nga'
   },
+  department: {
+    type: Schema.ObjectId,
+    ref: 'Department',
+    required: true
+  },
   role: {
     type: String,
     enum: roles,
