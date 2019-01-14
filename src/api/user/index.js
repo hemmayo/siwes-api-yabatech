@@ -84,7 +84,7 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ name, picture, matriculationNumber, state, country, city, homeAddress }),
+  body({ name, matriculationNumber, state, country, city, homeAddress }),
   update)
 
 router.put('/:id/phone',

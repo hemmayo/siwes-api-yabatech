@@ -55,7 +55,7 @@ const userSchema = new Schema({
   },
   country: {
     type: String,
-    default: 'Nigeria'
+    default: 'nga'
   },
   role: {
     type: String,
