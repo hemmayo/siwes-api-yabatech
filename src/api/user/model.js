@@ -41,6 +41,22 @@ const userSchema = new Schema({
     trim: true,
     required: true
   },
+  homeAddress: {
+    type: String,
+    default: null
+  },
+  city: {
+    type: String,
+    default: null
+  },
+  state: {
+    type: String,
+    default: null
+  },
+  country: {
+    type: String,
+    default: 'Nigeria'
+  },
   role: {
     type: String,
     enum: roles,
@@ -82,10 +98,10 @@ userSchema.pre('save', function (next) {
 userSchema.methods = {
   view (full) {
     let view = {}
-    let fields = ['id', 'name', 'picture', 'matriculationNumber']
+    let fields = ['id', 'name', 'picture', 'matriculationNumber', 'state', 'country']
 
     if (full) {
-      fields = [...fields, 'email', 'phone', 'phoneVerification', 'createdAt']
+      fields = [...fields, 'email', 'phone', 'homeAddress', 'city', 'phoneVerification', 'createdAt']
     }
 
     fields.forEach((field) => { view[field] = this[field] })
