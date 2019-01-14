@@ -2,7 +2,8 @@ import mongoose, { Schema } from 'mongoose'
 
 const schoolSchema = new Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   }
 }, {
   timestamps: true,

@@ -2,7 +2,8 @@ import mongoose, { Schema } from 'mongoose'
 
 const departmentSchema = new Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   },
   school: {
     type: Schema.ObjectId,
