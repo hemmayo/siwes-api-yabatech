@@ -7,12 +7,14 @@ var messagebird = require('messagebird')(msgBirdKey)
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.find(query, select, cursor)
+    .populate('department')
     .then((users) => users.map((user) => user.view()))
     .then(success(res))
     .catch(next)
 
 export const show = ({ params }, res, next) =>
   User.findById(params.id)
+    .populate('department')
     .then(notFound(res))
     .then((user) => user ? user.view() : null)
     .then(success(res))
@@ -34,7 +36,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
         res.status(409).json({
           valid: false,
           param: 'email',
-          message: 'email already registered'
+          message: 'email or matric number already registered'
         })
       } else {
         next(err)
