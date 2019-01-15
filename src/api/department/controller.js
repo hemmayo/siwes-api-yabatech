@@ -9,12 +9,14 @@ export const create = ({ bodymen: { body } }, res, next) =>
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Department.find(query, select, cursor)
+    .populate('school')
     .then((departments) => departments.map((department) => department.view()))
     .then(success(res))
     .catch(next)
 
 export const show = ({ params }, res, next) =>
   Department.findById(params.id)
+    .populate('school')
     .then(notFound(res))
     .then((department) => department ? department.view() : null)
     .then(success(res))
