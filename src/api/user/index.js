@@ -7,7 +7,7 @@ import { schema } from './model'
 export User, { schema } from './model'
 
 const router = new Router()
-const { email, password, name, picture, matriculationNumber, phone, homeAddress, city, state, country, role } = schema.tree
+const { email, password, name, picture, matriculationNumber, department, phone, homeAddress, city, state, country, role } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -66,7 +66,7 @@ router.get('/:id',
  */
 router.post('/',
   master(),
-  body({ email, password, name, picture, matriculationNumber, phone, homeAddress, city, state, country, role }),
+  body({ email, password, name, picture, department, matriculationNumber, phone, homeAddress, city, state, country, role }),
   create)
 
 /**
@@ -84,7 +84,7 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ name, matriculationNumber, state, country, city, homeAddress }),
+  body({ name, matriculationNumber, state, country, phone, city, homeAddress }),
   update)
 
 router.put('/:id/phone',
