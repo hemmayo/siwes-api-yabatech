@@ -4,6 +4,7 @@ const placementSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User',
+    unique: true,
     required: true
   },
   supervisor: {

@@ -15,7 +15,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .catch(next)
 
 export const show = ({ params }, res, next) =>
-  Placement.findById(params.id)
+  Placement.find({ user: params.id })
     .populate('user')
     .then(notFound(res))
     .then((placement) => placement ? placement.view() : null)
