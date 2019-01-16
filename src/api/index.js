@@ -5,6 +5,7 @@ import passwordReset from './password-reset'
 import studentProfile from './student-profile'
 import department from './department'
 import school from './school'
+import placement from './placement'
 
 const router = new Router()
 
@@ -37,5 +38,6 @@ router.use('/password-resets', passwordReset)
 router.use('/student-profiles', studentProfile)
 router.use('/departments', department)
 router.use('/schools', school)
+router.use('/placements', placement)
 
 export default router
