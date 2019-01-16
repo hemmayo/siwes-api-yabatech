@@ -15,7 +15,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .catch(next)
 
 export const show = ({ params }, res, next) =>
-  Placement.find({ user: params.id })
+  Placement.findOne({ user: params.id })
     .populate('user')
     .then(notFound(res))
     .then((placement) => placement ? placement.view() : null)
@@ -23,7 +23,7 @@ export const show = ({ params }, res, next) =>
     .catch(next)
 
 export const update = ({ user, bodymen: { body }, params }, res, next) =>
-  Placement.find({ user: params.id })
+  Placement.findOne({ user: params.id })
     .populate('user')
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'user'))
