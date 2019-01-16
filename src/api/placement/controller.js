@@ -23,7 +23,7 @@ export const show = ({ params }, res, next) =>
     .catch(next)
 
 export const update = ({ user, bodymen: { body }, params }, res, next) =>
-  Placement.findById(params.id)
+  Placement.find({ user: params.id })
     .populate('user')
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'user'))
